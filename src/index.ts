@@ -1,13 +1,13 @@
-// searchbase.ts
+import fetch from "cross-fetch";
 
-interface FilterValue {
+export interface FilterValue {
   [key: string]: any;
 }
 
 export interface Filter {
   field: string;
   op: string;
-  value: FilterValue;
+  value: FilterValue | string | number | boolean;
 }
 
 export enum SortDirection {
@@ -34,29 +34,10 @@ export interface Range {
   end: number;
 }
 
-export interface Timestamp {
-  _seconds: number;
-  _nanoseconds: number;
-}
-
-export interface SearchResult {
-  id: string;
-  title: string;
-  url: string;
-  rent: number;
-  bedrooms: number;
-  bathrooms: number;
-  source: string;
-  neighborhood: number;
-  originalNeighborhood: string;
-  thumbnailURLs: string[];
-  createdAt: Timestamp;
-}
-
-export interface SearchResponse {
+export interface SearchResponse<T = any> {
   total: number;
   range: Range;
-  records: SearchResult[];
+  records: T[];
 }
 
 export class SearchError extends Error {
@@ -95,7 +76,9 @@ export class SearchbaseSDK {
     }
   }
 
-  public async search(options: SearchOptions): Promise<SearchResponse> {
+  public async search<T = any>(
+    options: SearchOptions
+  ): Promise<SearchResponse<T>> {
     const url = `${this.baseURL}/search`;
     const body = {
       query: {
@@ -104,7 +87,7 @@ export class SearchbaseSDK {
         ...(options.sort && { sort: options.sort }),
         ...(options.select && { select: options.select }),
         ...(options.limit && { limit: options.limit }),
-        ...(options.offset && { offset: options.offset }),
+        ...(options.offset && options.offset > 0 && { offset: options.offset }),
       },
     };
 
@@ -119,19 +102,19 @@ export class SearchbaseSDK {
 
     const response = await this.fetchWithErrorHandling(url, requestOptions);
     const data = await response.json();
-    return data as SearchResponse;
+    return data as SearchResponse<T>;
   }
 
-  public async *searchAll(
+  public async *searchAll<T = any>(
     options: Omit<SearchOptions, "limit" | "offset">
-  ): AsyncGenerator<SearchResult[], void, unknown> {
+  ): AsyncGenerator<T[], void, unknown> {
     const batchSize = 100;
     let offset = 0;
     let totalFetched = 0;
     let total: number | undefined;
 
     do {
-      const response = await this.search({
+      const response = await this.search<T>({
         ...options,
         limit: batchSize,
         offset,
