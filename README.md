@@ -1,6 +1,6 @@
-# searchbase-js
+# searchbase-sdk
 
-searchbase-js is a TypeScript/JavaScript SDK for interacting with the Searchbase API. It provides an easy-to-use interface for performing searches and retrieving results from your Searchbase indexes.
+searchbase-sdk is a TypeScript/JavaScript SDK for interacting with the Searchbase API. It provides an easy-to-use interface for performing searches and retrieving results from your Searchbase indexes.
 
 ## Table of Contents
 
@@ -30,11 +30,11 @@ searchbase-js is a TypeScript/JavaScript SDK for interacting with the Searchbase
 
 ## Installation
 
-You can install searchbase-js using npm:
+You can install searchbase-sdk using npm:
 
 ```bash
 
-npm install searchbase-js
+npm install searchbase-sdk
 
 ```
 
@@ -42,17 +42,17 @@ Or using yarn:
 
 ```bash
 
-yarn add searchbase-js
+yarn add searchbase-sdk
 
 ```
 
 ## Usage
 
-Here's a basic example of how to use the searchbase-js SDK:
+Here's a basic example of how to use the searchbase-sdk SDK:
 
 ```typescript
 
-import SearchbaseSDK from 'searchbase-js';
+import SearchbaseSDK from 'searchbase-sdk';
 
 const sdk = new SearchbaseSDK('your-api-token');
 

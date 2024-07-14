@@ -1,6 +1,6 @@
 {
   "name": "searchbase-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "JavaScript SDK for Searchbase API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,7 +8,8 @@
     "build": "tsc",
     "start": "tsc -w",
     "test": "jest",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "publish": "npm test && npm run prepublishOnly && npm publish --access public"
   },
   "keywords": [
     "searchbase",
