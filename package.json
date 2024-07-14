@@ -1,5 +1,5 @@
 {
-  "name": "searchbase-js",
+  "name": "searchbase-sdk",
   "version": "1.0.0",
   "description": "JavaScript SDK for Searchbase API",
   "main": "dist/index.js",
@@ -15,7 +15,7 @@
     "api",
     "sdk"
   ],
-  "author": "Your Name",
+  "author": "Vanly Co.",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^27.5.2",
